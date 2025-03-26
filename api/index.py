@@ -4,7 +4,11 @@ from together import Together
 import os
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/*": {
+    "origins": ["http://127.0.0.1:5500", "https://your-production-domain.com"],
+    "methods": ["GET", "POST", "OPTIONS"],
+    "allow_headers": ["Content-Type", "Authorization"]
+}})
 
 # Retrieve API key from environment variable
 TOGETHER_API_KEY = '07589fb47c69da2f5af8b4ecdee9b843614c5f76605e1706b1af22ea1dd728cd'
@@ -117,12 +121,9 @@ def generate_code():
 @app.route('/analyze-text', methods=['POST', 'OPTIONS'])
 def analyze_text():
     if request.method == 'OPTIONS':
-        # Handle CORS preflight request
         response = jsonify(success=True)
-        response.headers.add('Access-Control-Allow-Origin', '*')
-        response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
-        response.headers.add('Access-Control-Allow-Methods', 'POST, OPTIONS')
         return response
+
 
     # Get the user prompt
     data = request.json
