@@ -7,7 +7,7 @@ app = Flask(__name__)
 CORS(app)
 
 # Retrieve API key from environment variable
-TOGETHER_API_KEY = os.environ.get('TOGETHER_API_KEY')
+TOGETHER_API_KEY = '07589fb47c69da2f5af8b4ecdee9b843614c5f76605e1706b1af22ea1dd728cd'
 
 @app.route('/generate-code', methods=['POST', 'OPTIONS'])
 def generate_code():
